@@ -2,62 +2,48 @@
 const translations = {
     'zh-tw': {
         title: 'DSE Flashcards',
-        subtitle: '文言文12篇',
+        subtitle: ' ',
         back: '返回',
         previous: '上一張',
         next: '下一張',
         go: '前往',
-        jumpTo: '……',
+        jumpTo: '跳轉至',
         flipHint: ' ',
         of: '/',
-        versionLog: '版本日誌'
+        versionLog: '版本日誌',
+        subject: '科目',
+        allSubjects: '所有科目',
+        unspecified: '未分類'
     },
     'en': {
         title: 'DSE Flashcards',
-        subtitle: 'For the 12 Classical Chinese Texts',
+        subtitle: ' ',
         back: 'Back',
         previous: 'Previous',
         next: 'Next',
         go: 'Go',
-        jumpTo: '...',
+        jumpTo: 'Jump to ',
         flipHint: ' ',
         of: '/',
-        versionLog: 'Version Log'
+        versionLog: 'Version Log',
+        subject: 'Subject',
+        allSubjects: 'All Subjects',
+        unspecified: 'Unspecified'
     }
 };
 
-const csvData = `
-10.3 《青玉案·元夕》：字詞||'東風'夜放花千樹|春風
-10.3 《青玉案·元夕》：字詞|4|東風夜'放'花千樹|吹開
-10.3 《青玉案·元夕》：字詞|7|東風夜放'花千樹'|花燈多如千樹開花 / 千萬棵樹上盛放的花
-10.3 《青玉案·元夕》：字詞|4|'更'吹落、星如雨|又/再
-10.3 《青玉案·元夕》：字詞|7|更吹落、'星如雨'|煙火/花燈如雨般落下
-10.3 《青玉案·元夕》：字詞||'寶馬'雕車香滿路|名貴的駿馬
-10.3 《青玉案·元夕》：字詞||寶馬'雕車'香滿路|裝飾華麗的車
-10.3 《青玉案·元夕》：字詞||寶馬雕車香'滿'路|滿溢
-10.3 《青玉案·元夕》：字詞|7|鳳簫聲'動'，玉壺光轉|響起
-10.3 《青玉案·元夕》：字詞|7|鳳簫聲動，'玉壺'光轉|喻明月
-10.3 《青玉案·元夕》：字詞|7|鳳簫聲動，玉壺'光轉'|（月光）照射的位置轉變，意指時間推移
-10.3 《青玉案·元夕》：字詞|4|'一夜'魚龍舞|整夜
-10.3 《青玉案·元夕》：字詞||一夜'魚龍舞'|舞動魚形龍形的彩燈
-10.3 《青玉案·元夕》：字詞||蛾兒雪柳黃金縷|(婦女佩戴)華麗的頭飾；（盛裝打扮、花枝招展）
-10.3 《青玉案·元夕》：字詞||'笑語'盈盈暗香去|有説有笑
-10.3 《青玉案·元夕》：字詞|4|笑語'盈盈'暗香去|儀態美觀的樣子
-10.3 《青玉案·元夕》：字詞|7|笑語盈盈'暗香'去|隱約的香氣，借代女子
-10.3 《青玉案·元夕》：字詞||笑語盈盈暗香'去'|經過
-10.3 《青玉案·元夕》：字詞|4|眾裡尋他'千百度'|多次/反覆
-10.3 《青玉案·元夕》：字詞||'驀然'回首|突然
-10.3 《青玉案·元夕》：字詞||那人卻在、燈火'闌珊'處|暗淡/稀疏
-`;
+const csvData = `中國語文|10.3 《青玉案·元夕》：字詞||'東風'夜放花千樹|春風中國語文|10.3 《青玉案·元夕》：字詞|4|東風夜'放'花千樹|吹開中國語文|10.3 《青玉案·元夕》：字詞|7|東風夜放'花千樹'|花燈多如千樹開花 / 千萬棵樹上盛放的花中國語文|10.3 《青玉案·元夕》：字詞|4|'更'吹落、星如雨|又/再中國語文|10.3 《青玉案·元夕》：字詞|7|更吹落、'星如雨'|煙火/花燈如雨般落下中國語文|10.3 《青玉案·元夕》：字詞||'寶馬'雕車香滿路|名貴的駿馬中國語文|10.3 《青玉案·元夕》：字詞||寶馬'雕車'香滿路|裝飾華麗的車中國語文|10.3 《青玉案·元夕》：字詞||寶馬雕車香'滿'路|滿溢中國語文|10.3 《青玉案·元夕》：字詞|7|鳳簫聲'動'，玉壺光轉|響起中國語文|10.3 《青玉案·元夕》：字詞|7|鳳簫聲動，'玉壺'光轉|喻明月中國語文|10.3 《青玉案·元夕》：字詞|7|鳳簫聲動，玉壺'光轉'|（月光）照射的位置轉變，意指時間推移中國語文|10.3 《青玉案·元夕》：字詞|4|'一夜'魚龍舞|整夜中國語文|10.3 《青玉案·元夕》：字詞||一夜'魚龍舞'|舞動魚形龍形的彩燈中國語文|10.3 《青玉案·元夕》：字詞||蛾兒雪柳黃金縷|(婦女佩戴)華麗的頭飾；（盛裝打扮、花枝招展）中國語文|10.3 《青玉案·元夕》：字詞||'笑語'盈盈暗香去|有説有笑中國語文|10.3 《青玉案·元夕》：字詞|4|笑語'盈盈'暗香去|儀態美觀的樣子中國語文|10.3 《青玉案·元夕》：字詞|7|笑語盈盈'暗香'去|隱約的香氣，借代女子中國語文|10.3 《青玉案·元夕》：字詞||笑語盈盈暗香'去'|經過中國語文|10.3 《青玉案·元夕》：字詞|4|眾裏尋他'千百度'|多次/反覆中國語文|10.3 《青玉案·元夕》：字詞||'驀然'回首|突然中國語文|10.3 《青玉案·元夕》：字詞||那人卻在、燈火'闌珊'處|暗淡/稀疏`;
 
 const versionData = `
-1.0.0|2026-02-02|初版，含《青玉案·元夕》：字詞
+2.0.0|2026-02-04|Introduces subject selector. Automatically uses Chinese UI for "中國語文", otherwise English is applied.
+1.0.0|2026-02-02|Initial version, contains《青玉案·元夕》：字詞.
 `;
 
 // Global state
-let currentLanguage = 'zh-tw';
+let currentLanguage = 'en';
 let flashcards = [];
 let chapters = [];
+let selectedSubject = 'All'; // Currently selected subject
 let currentChapterIndex = -1;
 let currentCardIndex = 0;
 let currentChapterCards = [];
@@ -68,6 +54,7 @@ let selectedDifficulties = {}; // Map of chapter -> Set of selected difficulties
 document.addEventListener('DOMContentLoaded', () => {
     setupLanguageButtons();
     loadFlashcards();
+    setupSubjectSelector();
     setupEventListeners();
     updateLanguage();
     setVersionButtonText();
@@ -88,8 +75,11 @@ function setupLanguageButtons() {
         });
     });
     
-    // Set default language button as active
-    document.querySelector(`[data-lang="zh-tw"]`).classList.add('active');
+    // Set default language button as active (only if buttons exist)
+    const defaultBtn = document.querySelector(`[data-lang="zh-tw"]`);
+    if (defaultBtn) {
+        defaultBtn.classList.add('active');
+    }
 }
 
 function updateLanguage() {
@@ -110,11 +100,60 @@ function updateLanguage() {
 function loadFlashcards() {
     try {
         parseFlashcards(csvData);
+        
+        const hasChinese = flashcards.some(card => card.subject === '中國語文');
+        currentLanguage = hasChinese ? 'zh-tw' : 'en';
+        
         renderChapterList();
     } catch (error) {
         console.error('Error parsing flashcards:', error);
         alert('Failed to parse flashcard data: ' + error.message);
     }
+}
+
+// Get unique subjects from flashcards
+function getUniqueSubjects() {
+    const subjectSet = new Set(flashcards.map(card => card.subject));
+    return ['All', ...Array.from(subjectSet).sort()];
+}
+
+// Get translated subject name
+function getTranslatedSubject(subject) {
+    if (subject === 'Unspecified') {
+        return translations[currentLanguage].unspecified;
+    }
+    return subject;
+}
+
+// Setup Subject Selector
+function setupSubjectSelector() {
+    const selector = document.getElementById('subjectSelector');
+    if (!selector) return;
+    
+    selector.innerHTML = '';
+    const subjects = getUniqueSubjects();
+    subjects.forEach(subject => {
+        const option = document.createElement('option');
+        option.value = subject;
+        if (subject === 'All') {
+            option.textContent = translations[currentLanguage].allSubjects;
+        } else {
+            option.textContent = getTranslatedSubject(subject);
+        }
+        selector.appendChild(option);
+    });
+    
+    selector.addEventListener('change', (e) => {
+        selectedSubject = e.target.value;
+        // Switch language based on subject
+        if (selectedSubject === '中國語文') {
+            currentLanguage = 'zh-tw';
+        } else {
+            currentLanguage = 'en';
+        }
+        updateLanguage();
+        renderChapterList();
+    });
 }
 
 function parseFlashcards(csvText) {
@@ -123,14 +162,18 @@ function parseFlashcards(csvText) {
     chapters = [];
     chapterDifficulties = {};
     const chapterMap = {};
+    const subjectSet = new Set();
 
     lines.forEach(line => {
         const parts = line.split('|');
-        if (parts.length >= 4) {
-            const chapter = parts[0].trim();
-            const difficulty = parseInt(parts[1].trim()) || 1;
-            const front = parts[2].trim();
-            const back = parts[3].trim();
+        if (parts.length >= 5) {
+            const subject = parts[0].trim() || 'Unspecified';
+            const chapter = parts[1].trim();
+            const difficulty = parseInt(parts[2].trim()) || 1;
+            const front = parts[3].trim();
+            const back = parts[4].trim();
+            
+            subjectSet.add(subject);
 
             if (!chapterMap[chapter]) {
                 chapterMap[chapter] = [];
@@ -141,6 +184,7 @@ function parseFlashcards(csvText) {
             chapterDifficulties[chapter].add(difficulty);
 
             chapterMap[chapter].push({
+                subject,
                 chapter,
                 difficulty,
                 front: parseMarkdown(front),
@@ -176,7 +220,16 @@ function renderChapterList() {
     chapterList.innerHTML = '';
 
     chapters.forEach((chapter, index) => {
-        const count = flashcards.filter(card => card.chapter === chapter).length;
+        // Filter cards by selected subject
+        let cardsForChapter = flashcards.filter(card => card.chapter === chapter);
+        if (selectedSubject !== 'All') {
+            cardsForChapter = cardsForChapter.filter(card => card.subject === selectedSubject);
+        }
+        const count = cardsForChapter.length;
+        
+        // Skip if no cards for this subject
+        if (count === 0) return;
+        
         const difficulties = Array.from(chapterDifficulties[chapter]).sort((a, b) => a - b);
         
         const chapterItemDiv = document.createElement('div');
@@ -235,7 +288,8 @@ function startChapter(index) {
     const chapter = chapters[index];
     const selectedDifficultiesArray = Array.from(selectedDifficulties[chapter]);
     currentChapterCards = flashcards.filter(card => 
-        card.chapter === chapter && selectedDifficultiesArray.includes(card.difficulty)
+        card.chapter === chapter && selectedDifficultiesArray.includes(card.difficulty) &&
+        (selectedSubject === 'All' || card.subject === selectedSubject)
     );
 
     if (currentChapterCards.length === 0) return;
