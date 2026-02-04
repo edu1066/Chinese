@@ -11,12 +11,13 @@ from pathlib import Path
 GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT45XaOHQgAkXJ7fOcVpGyKV7prIITJ-NAb_U2TZm3rA6DFu2ktNla0MG9taaYpix-htv_gFtN-jyLh/pub?output=tsv'
 
 # Script location
-SCRIPT_DIR = Path(__file__).parent
+SCRIPT_DIR = Path(__file__).parent.parent
 APP_JS_FILE = SCRIPT_DIR / 'app.js'
 
 def convert_tsv_to_csv(tsv_text):
     """Convert TSV (tab-separated) to CSV (pipe-separated)."""
-    lines = tsv_text.strip().split('\n')
+    lines = tsv_text.strip().split('\r\n')
+    print(lines)
     csv_lines = []
     
     for line in lines:
