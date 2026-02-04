@@ -24,7 +24,7 @@ def convert_tsv_to_csv(tsv_text):
         csv_line = line.replace('\t', '|')
         csv_lines.append(csv_line)
     
-    return ''.join(csv_lines)
+    return '\n'.join(csv_lines)
 
 def update_app_js(csv_data):
     """Update the csvData constant in app.js with new data."""
