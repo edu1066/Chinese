@@ -582,7 +582,7 @@ function showVersionModal() {
             entry.innerHTML = `
                 <div class="version-header">
                     <span class="version-number">v${versionNum}</span>
-                    <span class="version-date">${date}</span>
+                    <!--<span class="version-date">${date}</span>-->
                 </div>
                 <div class="version-content">${content}</div>
             `;
