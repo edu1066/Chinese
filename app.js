@@ -333,7 +333,8 @@ function parseFlashcards(csvText) {
         if (parts.length >= 5) {
             const subject = parts[0].trim() || 'Unspecified';
             const chapter = parts[1].trim();
-            const difficulty = parseInt(parts[2].trim()) || 1;
+            const difficultyStr = parts[2].trim();
+            const difficulty = difficultyStr === '' ? 1 : (isNaN(difficultyStr) ? difficultyStr : parseInt(difficultyStr));
             const front = parts[3].trim();
             const back = parts[4].trim();
             
@@ -398,7 +399,21 @@ function renderChapterList() {
         // Skip if no cards for this subject
         if (count === 0) return;
         
-        const difficulties = Array.from(chapterDifficulties[chapter]).sort((a, b) => a - b);
+        const difficulties = Array.from(chapterDifficulties[chapter]).sort((a, b) => {
+            const aIsInt = Number.isInteger(a);
+            const bIsInt = Number.isInteger(b);
+            
+            // Both integers: sort numerically
+            if (aIsInt && bIsInt) {
+                return a - b;
+            }
+            // One integer, one not: integers come first
+            if (aIsInt !== bIsInt) {
+                return aIsInt ? -1 : 1;
+            }
+            // Both non-integers: sort alphabetically
+            return String(a).localeCompare(String(b));
+        });
         
         const chapterItemDiv = document.createElement('div');
         chapterItemDiv.className = 'chapter-item';
@@ -439,7 +454,9 @@ function renderChapterList() {
             });
             
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(` Lv.${difficulty}`));
+            const isInteger = Number.isInteger(difficulty);
+            const difficultyLabel = isInteger ? ` Lv.${difficulty}` : ` ${difficulty}`;
+            label.appendChild(document.createTextNode(difficultyLabel));
             difficultyContainer.appendChild(label);
         });
         
