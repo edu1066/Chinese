@@ -1,4 +1,3 @@
-// i18n translations
 const translations = {
     'zh-tw': {
         title: 'DSE Flashcards',
@@ -203,18 +202,16 @@ const versionData = `
 1.0.0|2026-02-02|Initial version, contained《青玉案·元夕》：字詞.
 `;
 
-// Global state
 let currentLanguage = 'en';
 let flashcards = [];
 let chapters = [];
-let selectedSubject = 'All'; // Currently selected subject
+let selectedSubject = 'All';
 let currentChapterIndex = -1;
 let currentCardIndex = 0;
 let currentChapterCards = [];
-let chapterDifficulties = {}; // Map of chapter -> Set of difficulties
-let selectedDifficulties = {}; // Map of chapter -> Set of selected difficulties
+let chapterDifficulties = {};
+let selectedDifficulties = {};
 
-// Initialize app
 document.addEventListener('DOMContentLoaded', () => {
     setupLanguageButtons();
     loadFlashcards();
@@ -224,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setVersionButtonText();
 });
 
-// Language Management
 function setupLanguageButtons() {
     const langButtons = document.querySelectorAll('.lang-btn');
     langButtons.forEach(btn => {
@@ -239,7 +235,7 @@ function setupLanguageButtons() {
         });
     });
     
-    // Set default language button as active (only if buttons exist)
+    
     const defaultBtn = document.querySelector(`[data-lang="zh-tw"]`);
     if (defaultBtn) {
         defaultBtn.classList.add('active');
@@ -260,7 +256,6 @@ function updateLanguage() {
     });
 }
 
-// Load Flashcards from embedded CSV data
 function loadFlashcards() {
     try {
         parseFlashcards(csvData);
@@ -275,13 +270,11 @@ function loadFlashcards() {
     }
 }
 
-// Get unique subjects from flashcards
 function getUniqueSubjects() {
     const subjectSet = new Set(flashcards.map(card => card.subject));
     return ['All', ...Array.from(subjectSet).sort()];
 }
 
-// Get translated subject name
 function getTranslatedSubject(subject) {
     if (subject === 'Unspecified') {
         return translations[currentLanguage].unspecified;
@@ -289,7 +282,6 @@ function getTranslatedSubject(subject) {
     return subject;
 }
 
-// Setup Subject Selector
 function setupSubjectSelector() {
     const selector = document.getElementById('subjectSelector');
     if (!selector) return;
@@ -309,7 +301,6 @@ function setupSubjectSelector() {
     
     selector.addEventListener('change', (e) => {
         selectedSubject = e.target.value;
-        // Switch language based on subject
         if (selectedSubject === '中國語文') {
             currentLanguage = 'zh-tw';
         } else {
@@ -360,12 +351,10 @@ function parseFlashcards(csvText) {
         }
     });
 
-    // Initialize selected difficulties to all difficulties for each chapter
     chapters.forEach(chapter => {
         selectedDifficulties[chapter] = new Set(chapterDifficulties[chapter]);
     });
 
-    // Flatten into flashcards array with chapter info
     chapters.forEach(chapter => {
         flashcards.push(...chapterMap[chapter].map(card => ({
             ...card,
@@ -375,43 +364,36 @@ function parseFlashcards(csvText) {
 }
 
 function parseMarkdown(text) {
-    // Replace *text* with <strong>text</strong>
     text = text.replace(/\*(.+?)\*/g, '<strong>$1</strong>');
-    // Support <br> tags for line breaks (handle both encoded and literal forms)
     text = text.replace(/&lt;br&gt;/g, '<br>');
     text = text.replace(/<br>/g, '<br>');
     return text;
 }
 
-// Render Chapter List
 function renderChapterList() {
     const chapterList = document.getElementById('chapterList');
     chapterList.innerHTML = '';
 
     chapters.forEach((chapter, index) => {
-        // Filter cards by selected subject
         let cardsForChapter = flashcards.filter(card => card.chapter === chapter);
         if (selectedSubject !== 'All') {
             cardsForChapter = cardsForChapter.filter(card => card.subject === selectedSubject);
         }
         const count = cardsForChapter.length;
         
-        // Skip if no cards for this subject
         if (count === 0) return;
         
         const difficulties = Array.from(chapterDifficulties[chapter]).sort((a, b) => {
             const aIsInt = Number.isInteger(a);
             const bIsInt = Number.isInteger(b);
             
-            // Both integers: sort numerically
             if (aIsInt && bIsInt) {
                 return a - b;
             }
-            // One integer, one not: integers come first
             if (aIsInt !== bIsInt) {
                 return aIsInt ? -1 : 1;
             }
-            // Both non-integers: sort alphabetically
+            // both non-integers: sort alphabetically
             return String(a).localeCompare(String(b));
         });
         
@@ -466,7 +448,6 @@ function renderChapterList() {
     });
 }
 
-// Start Chapter
 function startChapter(index) {
     currentChapterIndex = index;
     currentCardIndex = 0;
@@ -484,15 +465,12 @@ function startChapter(index) {
     updateProgress();
 }
 
-// Setup Event Listeners
 function setupEventListeners() {
-    // Back button
     document.getElementById('backBtn').addEventListener('click', () => {
         currentChapterIndex = -1;
         showChapterPage();
     });
 
-    // Previous button
     document.getElementById('prevBtn').addEventListener('click', () => {
         if (currentCardIndex > 0) {
             currentCardIndex--;
@@ -500,7 +478,6 @@ function setupEventListeners() {
         }
     });
 
-    // Next button
     document.getElementById('nextBtn').addEventListener('click', () => {
         if (currentCardIndex < currentChapterCards.length - 1) {
             currentCardIndex++;
@@ -508,7 +485,6 @@ function setupEventListeners() {
         }
     });
 
-    // Jump to card
     document.getElementById('jumpBtn').addEventListener('click', () => {
         jumpToCard();
     });
@@ -519,13 +495,12 @@ function setupEventListeners() {
         }
     });
 
-    // Flip card on click
+    // flip card on click
     document.getElementById('flashcard').addEventListener('click', (e) => {
         const flashcard = document.getElementById('flashcard');
         flashcard.classList.toggle('flipped');
     });
 
-    // Version button
     document.getElementById('versionBtn').addEventListener('click', () => {
         showVersionModal();
     });
@@ -554,7 +529,6 @@ function jumpToCard() {
     }
 }
 
-// Update Flashcard Display
 function updateFlashcard() {
     if (currentCardIndex < 0 || currentCardIndex >= currentChapterCards.length) return;
 
@@ -562,11 +536,10 @@ function updateFlashcard() {
     document.getElementById('flashcardFront').innerHTML = card.front;
     document.getElementById('flashcardBack').innerHTML = card.back;
 
-    // Reset flip state
+    // reset flip state
     const flashcard = document.getElementById('flashcard');
     flashcard.classList.remove('flipped');
 
-    // Update button states
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     prevBtn.disabled = currentCardIndex === 0;
@@ -582,7 +555,6 @@ function updateProgress() {
         `${currentCardIndex + 1} ${translations[currentLanguage].of} ${currentChapterCards.length}`;
 }
 
-// Page Navigation
 function showChapterPage() {
     document.getElementById('chapterPage').classList.add('active');
     document.getElementById('flashcardPage').classList.remove('active');
@@ -593,7 +565,6 @@ function showFlashcardPage() {
     document.getElementById('flashcardPage').classList.add('active');
 }
 
-// Version Log Functions
 function showVersionModal() {
     const versionLogContent = document.getElementById('versionLogContent');
     versionLogContent.innerHTML = '';
